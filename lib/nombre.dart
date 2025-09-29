@@ -1,26 +1,27 @@
 class Nombre {
-  late String candidato;
+  final String candidato;
 
-  Nombre(String c) {
-    if (c.length < LongitudMinimaPermitida) {
+  Nombre(String valor) : candidato = _validar(valor);
+
+  static String _validar(String valor) {
+    if (valor.length < longitudMinima) {
       throw LongitudMinimaExcepcion();
     }
-    if (c.length > LongitudMaximaPermitida) {
+    if (valor.length > longitudMaxima) {
       throw LongitudMaximaExcepcion();
     }
 
-  
     final regex = RegExp(r'^[a-zA-ZáéíóúÁÉÍÓÚñÑ]+$');
-    if (!regex.hasMatch(c)) {
+    if (!regex.hasMatch(valor)) {
       throw CaracterInvalidoExcepcion();
     }
 
-    candidato = c;
+    return valor;
   }
 }
 
-const LongitudMinimaPermitida = 5;
-const LongitudMaximaPermitida = 15;
+const int longitudMinima = 5;
+const int longitudMaxima = 15;
 
 class LongitudMinimaExcepcion extends Error {}
 class LongitudMaximaExcepcion extends Error {}
